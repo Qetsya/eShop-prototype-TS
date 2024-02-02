@@ -21,16 +21,18 @@ export const ProductCard = ({ product, addedProduct }: ProductProps) => {
   const { name, stock, price } = product;
 
   const [insertedProductQuantity, setInsertedProductQuantity] = useState(1);
-
+  const [showAlert, setShowAlert] = useState(false);
   const [quantityError, setQuantityError] = useState("");
 
   const addProductToCart = () => {
     try {
       const cartProduct = new CartProduct(insertedProductQuantity, product);
       addedProduct(cartProduct);
+      setShowAlert(true);
+      resetAlerts();
     } catch (e) {
       setQuantityError((e as Error).message);
-      resetError();
+      resetAlerts();
     }
   };
 
@@ -45,35 +47,47 @@ export const ProductCard = ({ product, addedProduct }: ProductProps) => {
     setInsertedProductQuantity(newQuantity);
   };
 
-  const resetError = () => {
+  const resetAlerts = () => {
     setTimeout(() => {
       setQuantityError("");
-    }, 3000);
+      setShowAlert(false);
+    }, 5000);
   };
 
   return (
-    <Card border="primary" style={{ maxWidth: "15rem" }}>
-      <CardBody>
-        <CardTitle>{name}</CardTitle>
-        <CardText>
-          Price: <span>{price}Eur</span>
-        </CardText>
-        <Form.Group className="productCard-form">
-          <Form.Label>Quantity:</Form.Label>
-          <Form.Control
-            type="number"
-            size="sm"
-            onChange={handleChange}
-            min={1}
-            max={stock}
-            value={insertedProductQuantity}
-          />
-          <Button type="submit" variant="primary " onClick={addProductToCart}>
-            Buy
-          </Button>
-        </Form.Group>
-        {quantityError && <Alert variant="danger">{quantityError}</Alert>}
-      </CardBody>
-    </Card>
+    <>
+      <Card border="primary" style={{ maxWidth: "15rem" }}>
+        <CardBody>
+          <CardTitle>{name}</CardTitle>
+          <CardText>
+            Price: <span>{price}Eur</span>
+          </CardText>
+          <Form.Group className="productCard-form">
+            <Form.Label>Quantity:</Form.Label>
+            <Form.Control
+              type="number"
+              size="sm"
+              onChange={handleChange}
+              min={1}
+              max={stock}
+              value={insertedProductQuantity}
+            />
+            <Button type="submit" variant="primary " onClick={addProductToCart}>
+              Buy
+            </Button>
+          </Form.Group>
+          {quantityError && (
+            <Alert variant="danger">
+              <span>{quantityError}</span>
+            </Alert>
+          )}
+          {showAlert && (
+            <Alert variant="success">
+              <span>Product added to cart</span>
+            </Alert>
+          )}
+        </CardBody>
+      </Card>
+    </>
   );
 };
