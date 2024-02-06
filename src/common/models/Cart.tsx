@@ -11,7 +11,7 @@ export class Cart {
     let productExists = false;
 
     this.cartProducts.forEach((element) => {
-      if (element.name === productObject.name) {
+      if (element.title === productObject.title) {
         let tryAddProduct = element.addQuantity(productObject.quantity);
         if (tryAddProduct) {
           productExists = true;

@@ -1,13 +1,34 @@
 import { Product } from "../models/Product";
 
-export class CartProduct extends Product {
+export class CartProduct {
   public quantity: number = 0;
   public totalPrice: number = 0;
+  // private id : number;
+  public title: string;
+  public stock: number;
+  public price: number;
+  public brand: string;
+  public category: string;
+  public description: string;
+  public discountPercentage?: number;
+  public images?: string[];
+  public rating: number;
+  public thumbnail: string;
 
   constructor(quantity: number, product: Product) {
-    super(product.name, product.stock, product.price);
     this.quantity = quantity;
     this.totalPrice = quantity * product.price;
+    // this.id = product.id;
+    this.stock = product.stock;
+    this.title = product.title;
+    this.price = product.price;
+    this.brand = product.brand;
+    this.category = product.category;
+    this.description = product.description;
+    this.discountPercentage = product.discountPercentage;
+    this.images = product.images;
+    this.rating = product.rating;
+    this.thumbnail = product.thumbnail;
 
     const validQuantity = quantity > this.stock ? this.stock : quantity;
 

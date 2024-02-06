@@ -2,7 +2,6 @@ import {
   Card,
   CardBody,
   CardTitle,
-  Button,
   CardText,
   Form,
   Alert,
@@ -12,13 +11,15 @@ import { Product } from "../../models/Product";
 import { CartProduct } from "../../models/CartProduct";
 import { useState } from "react";
 
+import CartImage from "../../../assets/icons/cart3.svg";
+
 interface ProductProps {
   product: Product;
   addedProduct(item: CartProduct): void;
 }
 
 export const ProductCard = ({ product, addedProduct }: ProductProps) => {
-  const { name, stock, price } = product;
+  const { title, stock, price, images } = product;
 
   const [insertedProductQuantity, setInsertedProductQuantity] = useState(1);
   const [showAlert, setShowAlert] = useState(false);
@@ -51,17 +52,25 @@ export const ProductCard = ({ product, addedProduct }: ProductProps) => {
     setTimeout(() => {
       setQuantityError("");
       setShowAlert(false);
-    }, 5000);
+    }, 3000);
   };
 
   return (
     <>
-      <Card border="primary" style={{ maxWidth: "15rem" }}>
+      <Card style={{ maxWidth: "15rem", height: "19rem" }}>
+        <div style={{ height: "6rem" }}>
+          <Card.Img className="productCard-image" src={images[0]} />
+        </div>
         <CardBody>
-          <CardTitle>{name}</CardTitle>
-          <CardText>
-            Price: <span>{price}Eur</span>
-          </CardText>
+          <CardTitle>{title}</CardTitle>
+          <div>
+            <CardText className="mb-0">
+              Price: <span>{price}Eur</span>
+            </CardText>
+            <CardText>
+              Stock: <span>{stock}</span>
+            </CardText>
+          </div>
           <Form.Group className="productCard-form">
             <Form.Label>Quantity:</Form.Label>
             <Form.Control
@@ -72,9 +81,12 @@ export const ProductCard = ({ product, addedProduct }: ProductProps) => {
               max={stock}
               value={insertedProductQuantity}
             />
-            <Button type="submit" variant="primary " onClick={addProductToCart}>
-              Buy
-            </Button>
+            <img
+              src={CartImage}
+              className="productCard-cart-image"
+              onClick={addProductToCart}
+              alt="add-to-cart"
+            />
           </Form.Group>
           {quantityError && (
             <Alert variant="danger">

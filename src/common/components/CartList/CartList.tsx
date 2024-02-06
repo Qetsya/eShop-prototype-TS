@@ -11,12 +11,12 @@ export const CartList = ({ cart }: CartListProps) => {
   const list = cartProducts?.map((product) => {
     return (
       <ListGroup.Item
-        key={product.name}
+        key={product.title}
         as="li"
         className="d-flex justify-content-between align-items-center"
       >
         <div>
-          <p className="h6">{product.name}</p>
+          <p className="h6">{product.title}</p>
           <div className="d-flex gap-1">
             <span>{product.quantity}x</span>
             <span>{product.price}Eur</span>
@@ -30,10 +30,12 @@ export const CartList = ({ cart }: CartListProps) => {
     );
   });
 
+  let cartNotEmpty = cart.cartProducts.length > 0;
+
   return (
     <Container className="vstack gap-3">
       <ListGroup as="ol">{list}</ListGroup>
-      <Card body className="h6">Subtotal: {totalCartPrice}Eur</Card>
+      <Card body className="h6">{cartNotEmpty ? `Subtotal: ${totalCartPrice}Eur` : "Your cart is empty"}</Card>
       <Button className="mx-auto">View cart</Button>
     </Container>
   );
