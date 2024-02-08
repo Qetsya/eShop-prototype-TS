@@ -24,7 +24,7 @@ export const CartList = ({ cart }: CartListProps) => {
         </div>
 
         <div className="fw-bold d-flex gap-2">
-          <span>Total: {product.totalPrice}Eur</span>
+          <span>Total: {product.totalPrice} Eur</span>
         </div>
       </ListGroup.Item>
     );
@@ -35,7 +35,11 @@ export const CartList = ({ cart }: CartListProps) => {
   return (
     <Container className="vstack gap-3">
       <ListGroup as="ol">{list}</ListGroup>
-      <Card body className="h6">{cartNotEmpty ? `Subtotal: ${totalCartPrice}Eur` : "Your cart is empty"}</Card>
+      <Card body className="h6">
+        {cartNotEmpty
+          ? `Subtotal: ${totalCartPrice} Eur`
+          : "Your cart is empty"}
+      </Card>
       <Button className="mx-auto">View cart</Button>
     </Container>
   );

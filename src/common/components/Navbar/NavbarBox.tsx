@@ -15,7 +15,6 @@ export const NavbarBox = ({ cart }: CartListProps) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-
   const handleOpenCart = () => setShow(true);
 
   return (

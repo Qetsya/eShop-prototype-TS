@@ -3,7 +3,7 @@ import { Product } from "../models/Product";
 export class CartProduct {
   public quantity: number = 0;
   public totalPrice: number = 0;
-  // private id : number;
+  public id: number;
   public title: string;
   public stock: number;
   public price: number;
@@ -18,7 +18,7 @@ export class CartProduct {
   constructor(quantity: number, product: Product) {
     this.quantity = quantity;
     this.totalPrice = quantity * product.price;
-    // this.id = product.id;
+    this.id = product.id;
     this.stock = product.stock;
     this.title = product.title;
     this.price = product.price;

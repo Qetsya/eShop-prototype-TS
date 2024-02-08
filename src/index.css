@@ -13,20 +13,11 @@ code {
     monospace;
 }
 
-.card-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.productCard-form {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.productCard-form > label {
-  margin: 0;
+#dropdown-basic {
+  background-color: rgb(207, 207, 207);
+  margin-bottom: 1rem;
+  border: none;
+  color: black;
 }
 
 .productCard-form * {
@@ -41,8 +32,8 @@ code {
 .cart-icon,
 .search-icon,
 .productCard-cart-image {
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   cursor: pointer;
 }
 

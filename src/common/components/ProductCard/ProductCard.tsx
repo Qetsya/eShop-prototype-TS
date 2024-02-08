@@ -40,9 +40,9 @@ export const ProductCard = ({ product, addedProduct }: ProductProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newQuantity = Math.round(Number(e.target.value));
 
-    if (newQuantity > stock) {
-      newQuantity = stock;
-    }
+    if (newQuantity === 0) newQuantity = 1;
+    if (newQuantity > stock) newQuantity = stock;
+
     e.target.value = String(newQuantity);
 
     setInsertedProductQuantity(newQuantity);
@@ -61,7 +61,7 @@ export const ProductCard = ({ product, addedProduct }: ProductProps) => {
         <div style={{ height: "6rem" }}>
           <Card.Img className="productCard-image" src={images[0]} />
         </div>
-        <CardBody>
+        <CardBody className="d-flex flex-column justify-content-between">
           <CardTitle>{title}</CardTitle>
           <div>
             <CardText className="mb-0">
@@ -71,8 +71,8 @@ export const ProductCard = ({ product, addedProduct }: ProductProps) => {
               Stock: <span>{stock}</span>
             </CardText>
           </div>
-          <Form.Group className="productCard-form">
-            <Form.Label>Quantity:</Form.Label>
+          <Form.Group className="productCard-form d-flex align-items-center gap-4">
+            <Form.Label className="m-0">Quantity:</Form.Label>
             <Form.Control
               type="number"
               size="sm"
