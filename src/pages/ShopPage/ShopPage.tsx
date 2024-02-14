@@ -20,9 +20,10 @@ import {
 
 interface CartProps {
   defaultCart: Cart;
+  updateCart: (item: Cart) => any;
 }
 
-export const ShopPage = ({ defaultCart }: CartProps) => {
+export const ShopPage = ({ defaultCart, updateCart }: CartProps) => {
   const { loading, productList, error } = useList();
   const [list, setList] = useState<Product[]>(productList);
   const { sortMethods, filterMethods } = useSortFilterMethods();
@@ -30,6 +31,7 @@ export const ShopPage = ({ defaultCart }: CartProps) => {
   const addProduct = (product: CartProduct) => {
     try {
       defaultCart.addProduct(product);
+      updateCart(defaultCart);
       console.log("CART IN MAIN", defaultCart);
     } catch (e) {
       throw e;

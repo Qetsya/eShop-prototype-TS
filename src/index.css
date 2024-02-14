@@ -13,10 +13,19 @@ code {
     monospace;
 }
 
+.cartBadge {
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+.cartBadgeBox {
+  position: relative;
+}
+
 #dropdown-basic {
-  background-color: rgb(207, 207, 207);
+  background-color: transparent;
   margin-bottom: 1rem;
-  border: none;
+  border: 1px solid lightgrey;
   color: black;
 }
 

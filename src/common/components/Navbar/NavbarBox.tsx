@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Navbar, Nav, Offcanvas } from "react-bootstrap";
+import { Container, Navbar, Nav, Offcanvas, Badge } from "react-bootstrap";
 
 import CartIcon from "../../../assets/icons/basket3.svg";
 import SearchIcon from "../../../assets/icons/search.svg";
@@ -37,6 +37,11 @@ export const NavbarBox = ({ cart }: CartListProps) => {
           alt="cart-logo"
           onClick={handleOpenCart}
         />
+        <div className="cartBadgeBox">
+          <Badge onClick={handleOpenCart} className="cartBadge" bg="info">
+            {cart.totalCartQuantity ? cart.totalCartQuantity : ""}
+          </Badge>
+        </div>
         <Offcanvas show={show} onHide={handleClose} placement={"end"}>
           <Offcanvas.Header closeButton>
             <Offcanvas.Title>Cart</Offcanvas.Title>
