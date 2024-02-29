@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { routes } from "./common/routes/routes";
 import { NavbarBox } from "./common/components/Navbar/NavbarBox";
 import { ShopPage } from "./pages/ShopPage/ShopPage";
 import { CartPage } from "./pages/CartPage/CartPage";
@@ -17,9 +19,17 @@ function App() {
 
   return (
     <>
-      <NavbarBox cart={cart} />
-      <ShopPage defaultCart={newCart} updateCart={getUpdatedCart} />
-      <CartPage/>
+      <NavbarBox updateCartBadge={cart} />
+      <Routes>
+        <Route path="/" element={<Navigate to={routes.shop} />} />
+        <Route
+          path={routes.shop}
+          element={
+            <ShopPage defaultCart={newCart} updateCartBadge={getUpdatedCart} />
+          }
+        />
+        <Route path={routes.cart} element={<CartPage cart={newCart} />} />
+      </Routes>
     </>
   );
 }

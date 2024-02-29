@@ -4,26 +4,19 @@ import { useSortFilterMethods } from "../../common/hooks/useSortFilterMethods";
 import { Product } from "../../common/models/Product";
 import { CartProduct } from "../../common/models/CartProduct";
 import { ProductCard } from "../../common/components/ProductCard/ProductCard";
+import { ProductCardSkeleton } from "../../common/components/ProductCard/PructCardSkeleton";
 import { Cart } from "../../common/models/Cart";
 import { FilterSortContainer } from "./FilterSortContainer";
+import { setCartToLocalStorage } from "../../common/utils/localStorage";
 
-import {
-  Container,
-  Row,
-  Col,
-  Alert,
-  Placeholder,
-  Card,
-  CardBody,
-  CardTitle,
-} from "react-bootstrap";
+import { Container, Row, Col, Alert } from "react-bootstrap";
 
 interface CartProps {
   defaultCart: Cart;
-  updateCart: (item: Cart) => any;
+  updateCartBadge: (item: Cart) => any;
 }
 
-export const ShopPage = ({ defaultCart, updateCart }: CartProps) => {
+export const ShopPage = ({ defaultCart, updateCartBadge }: CartProps) => {
   const { loading, productList, error } = useList();
   const [list, setList] = useState<Product[]>(productList);
   const { sortMethods, filterMethods } = useSortFilterMethods();
@@ -31,7 +24,8 @@ export const ShopPage = ({ defaultCart, updateCart }: CartProps) => {
   const addProduct = (product: CartProduct) => {
     try {
       defaultCart.addProduct(product);
-      updateCart(defaultCart);
+      setCartToLocalStorage("cart", defaultCart);
+      updateCartBadge(defaultCart);
       console.log("CART IN MAIN", defaultCart);
     } catch (e) {
       throw e;
@@ -62,33 +56,26 @@ export const ShopPage = ({ defaultCart, updateCart }: CartProps) => {
       {error && <Alert>{error}</Alert>}
 
       <Container>
+        <FilterSortContainer
+          setSortByType={getSortingValue}
+          setFilterByCategory={getFilterValue}
+        />
         {loading ? (
-          <Card style={{ maxWidth: "15rem" }}>
-            <CardBody>
-              <CardTitle>
-                <Placeholder xs={6} />
-              </CardTitle>
-              <CardTitle>
-                <Placeholder xs={6} />
-              </CardTitle>
-            </CardBody>
-          </Card>
+          <Row xs={2} md={3} lg={4} className="gap-3">
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+          </Row>
         ) : (
-          <>
-            <FilterSortContainer
-              setSortByType={getSortingValue}
-              setFilterByCategory={getFilterValue}
-            />
-            <Row xs={2} md={3} lg={4} className="g-3">
-              {list?.map((item: Product) => {
-                return (
-                  <Col key={item.id}>
-                    <ProductCard product={item} addedProduct={addProduct} />
-                  </Col>
-                );
-              })}
-            </Row>
-          </>
+          <Row xs={2} md={3} lg={4} className="g-3">
+            {list?.map((item: Product) => {
+              return (
+                <Col key={item.id}>
+                  <ProductCard product={item} addedProduct={addProduct} />
+                </Col>
+              );
+            })}
+          </Row>
         )}
       </Container>
     </>

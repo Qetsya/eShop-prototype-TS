@@ -47,10 +47,6 @@ export class CartProduct {
     }
   }
 
-  minusQuantity() {
-    this.quantity = -1;
-  }
-
   updateQuantityAndPrice(validQuantity: number) {
     this.quantity = validQuantity;
     this.totalPrice = this.quantity * this.price;

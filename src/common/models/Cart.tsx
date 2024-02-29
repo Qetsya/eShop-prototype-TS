@@ -28,6 +28,12 @@ export class Cart {
     this.updateQuantityAndPrice();
   }
 
+  removeProduct(productObject: CartProduct) {
+    const index = this.cartProducts.indexOf(productObject);
+    this.cartProducts.splice(index, 1);
+    this.updateQuantityAndPrice();
+  }
+
   updateQuantityAndPrice() {
     let newTotalCartPrice = 0;
     let newCartQuantity = 0;

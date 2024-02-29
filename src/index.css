@@ -6,11 +6,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-bottom: 2rem;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.flex1 {
+  flex: 1;
 }
 
 .cartBadge {
@@ -20,6 +25,11 @@ code {
 }
 .cartBadgeBox {
   position: relative;
+}
+
+.cart-button-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 #dropdown-basic {

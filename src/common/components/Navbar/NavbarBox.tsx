@@ -7,15 +7,24 @@ import SearchIcon from "../../../assets/icons/search.svg";
 import { CartList } from "../CartList/CartList";
 import { Cart } from "../../models/Cart";
 
-interface CartListProps {
-  cart: Cart;
+import { routes } from "../../routes/routes";
+import { getCartFromLocalStorage } from "../../utils/localStorage";
+
+interface Props {
+  updateCartBadge: Cart;
 }
 
-export const NavbarBox = ({ cart }: CartListProps) => {
+export const NavbarBox = ({ updateCartBadge }: Props) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleOpenCart = () => setShow(true);
+
+  let cart = getCartFromLocalStorage("cart");
+
+  if (updateCartBadge) {
+    cart = getCartFromLocalStorage("cart");
+  }
 
   return (
     <Navbar
@@ -26,7 +35,7 @@ export const NavbarBox = ({ cart }: CartListProps) => {
       <Container style={{ maxHeight: "100px", gap: "10px" }}>
         <Navbar.Brand href="#home">LOGO</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href={routes.shop}>Home</Nav.Link>
           <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link>
         </Nav>
@@ -47,7 +56,7 @@ export const NavbarBox = ({ cart }: CartListProps) => {
             <Offcanvas.Title>Cart</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <CartList cart={cart} />
+            <CartList closeOffcanvas={handleClose} />
           </Offcanvas.Body>
         </Offcanvas>
       </Container>

@@ -1,14 +1,19 @@
 import { Container, ListGroup, Button, Card } from "react-bootstrap";
-import { Cart } from "../../models/Cart";
+import { Link } from "react-router-dom";
+import { routes } from "../../routes/routes";
 
-interface CartListProps {
-  cart: Cart;
+import { CartProduct } from "../../models/CartProduct";
+import { getCartFromLocalStorage } from "../../utils/localStorage";
+
+interface OffcanvasProps {
+  closeOffcanvas(): void;
 }
 
-export const CartList = ({ cart }: CartListProps) => {
-  const { cartProducts, totalCartPrice } = cart;
+export const CartList = ({ closeOffcanvas }: OffcanvasProps) => {
+  const getCart = getCartFromLocalStorage("cart");
+  const { cartProducts, totalCartPrice } = getCart;
 
-  const list = cartProducts?.map((product) => {
+  const list = cartProducts?.map((product: CartProduct) => {
     return (
       <ListGroup.Item
         key={product.title}
@@ -30,17 +35,28 @@ export const CartList = ({ cart }: CartListProps) => {
     );
   });
 
-  let cartNotEmpty = cart.cartProducts.length > 0;
+  let cartNotEmpty = cartProducts.length > 0;
 
   return (
     <Container className="vstack gap-3">
       <ListGroup as="ol">{list}</ListGroup>
-      <Card body className="h6">
+      <Card body className="h6 text-end">
         {cartNotEmpty
           ? `Subtotal: ${totalCartPrice} Eur`
           : "Your cart is empty"}
       </Card>
-      <Button className="mx-auto">View cart</Button>
+      <Button
+        className="mx-auto bg-transparent text-black border-black"
+        onClick={closeOffcanvas}
+      >
+        {cartNotEmpty ? (
+          <Link to={routes.cart} className="cart-button-link">
+            View cart
+          </Link>
+        ) : (
+          "View cart"
+        )}
+      </Button>
     </Container>
   );
 };
