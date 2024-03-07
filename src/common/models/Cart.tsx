@@ -29,8 +29,13 @@ export class Cart {
   }
 
   removeProduct(productObject: CartProduct) {
-    const index = this.cartProducts.indexOf(productObject);
-    this.cartProducts.splice(index, 1);
+    let index;
+    for (let prod of this.cartProducts) {
+      if (prod.id === productObject.id) {
+        index = this.cartProducts.indexOf(prod);
+        this.cartProducts.splice(index, 1);
+      }
+    }
     this.updateQuantityAndPrice();
   }
 
