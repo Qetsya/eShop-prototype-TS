@@ -8,3 +8,7 @@ export const getCartFromLocalStorage = (key: string) => {
   let item = window.localStorage.getItem(key);
   return item ? JSON.parse(item) : "";
 };
+
+export const emptyCartInLocalStorage = (key: string) => {
+  window.localStorage.removeItem(key);
+}

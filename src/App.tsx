@@ -4,6 +4,7 @@ import { routes } from "./common/routes/routes";
 import { NavbarBox } from "./common/components/Navbar/NavbarBox";
 import { ShopPage } from "./pages/ShopPage/ShopPage";
 import { CartPage } from "./pages/CartPage/CartPage";
+import { PageNotFound } from "./pages/PageNotFound/PageNotFound";
 import { Cart } from "./common/models/Cart";
 
 const newCart = new Cart();
@@ -29,6 +30,8 @@ function App() {
           }
         />
         <Route path={routes.cart} element={<CartPage cart={newCart} />} />
+        <Route path={routes.notFound} element={<PageNotFound/>}/>
+        <Route path="/*" element={<PageNotFound/>}/>
       </Routes>
     </>
   );

@@ -35,7 +35,8 @@ export const CartList = ({ closeOffcanvas }: OffcanvasProps) => {
     );
   });
 
-  let cartNotEmpty = cartProducts.length > 0;
+  let cartNotEmpty = true;
+  if (!cartProducts) cartNotEmpty = false;
 
   return (
     <Container className="vstack gap-3">

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ListGroup, Card, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { ListGroup, Card, Container, Button } from "react-bootstrap";
 
 import { Cart } from "../../common/models/Cart";
 import { CartItem } from "./CartItem";
@@ -7,6 +8,8 @@ import { CartProduct } from "../../common/models/CartProduct";
 
 import { getCartFromLocalStorage } from "../../common/utils/localStorage";
 import { setCartToLocalStorage } from "../../common/utils/localStorage";
+import { emptyCartInLocalStorage } from "../../common/utils/localStorage";
+import { routes } from "../../common/routes/routes";
 
 interface CartProps {
   cart: Cart;
@@ -41,6 +44,10 @@ export const CartPage = ({ cart }: CartProps) => {
     setUpdatedCartprice(cart.totalCartPrice);
   };
 
+  const emptyCart = () => {
+    emptyCartInLocalStorage("cart");
+  }
+
   return (
     <>
       <p className="h2 text-center pb-3">Your Cart</p>
@@ -73,6 +80,14 @@ export const CartPage = ({ cart }: CartProps) => {
             ? `Subtotal: ${updatedCartPrice} Eur`
             : "Your cart is empty"}
         </Card>
+        <Button className="mx-auto bg-transparent text-black border-black">
+          <Link to={routes.shop} className="cart-button-link">
+            Continue shopping
+          </Link>
+        </Button>
+        <Button className="mx-auto bg-black text-white border-black">
+          <Link to={routes.notFound} onClick={emptyCart} className="cart-button-link">Checkout</Link>
+        </Button>
       </Container>
     </>
   );
