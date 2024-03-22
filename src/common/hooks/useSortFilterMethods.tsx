@@ -24,6 +24,7 @@ export const useSortFilterMethods = () => {
     }
   };
 
+  //we can use this method if we have all products list saved. Now we are fetching list by category
   const filterMethods = (type: string) => {
     if (type === "default") {
       return (product: Product) => product;

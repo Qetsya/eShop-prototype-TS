@@ -13,9 +13,10 @@ import { routes } from "../../common/routes/routes";
 
 interface CartProps {
   cart: Cart;
+  updateCartBadge: (item: Cart) => void;
 }
 
-export const CartPage = ({ cart }: CartProps) => {
+export const CartPage = ({ cart, updateCartBadge }: CartProps) => {
   const cartFromLocalStorage = getCartFromLocalStorage("cart");
   const { cartProducts, totalCartPrice } = cartFromLocalStorage;
   const [updatedCartPrice, setUpdatedCartprice] = useState(totalCartPrice);
@@ -25,15 +26,12 @@ export const CartPage = ({ cart }: CartProps) => {
   const updateProduct = (product: CartProduct) => {
     for (let prod of cart.cartProducts) {
       if (prod.id === product.id) {
-        prod.quantity = product.quantity;
-        prod.updateQuantityAndPrice(prod.quantity);
+        prod.updateQuantityAndPrice(product.quantity);
       }
     }
     cart.updateQuantityAndPrice();
-  };
+    updateCartBadge(cart);
 
-  const updateTotalCartPrice = () => {
-    cart.updateQuantityAndPrice();
     setCartToLocalStorage("cart", cart);
     setUpdatedCartprice(cart.totalCartPrice);
   };
@@ -42,11 +40,13 @@ export const CartPage = ({ cart }: CartProps) => {
     cart.removeProduct(product);
     setCartToLocalStorage("cart", cart);
     setUpdatedCartprice(cart.totalCartPrice);
+    updateCartBadge(cart);
   };
 
   const emptyCart = () => {
     emptyCartInLocalStorage("cart");
-  }
+    updateCartBadge(cart);
+  };
 
   return (
     <>
@@ -68,7 +68,6 @@ export const CartPage = ({ cart }: CartProps) => {
               <CartItem
                 cartProduct={product}
                 key={product.id}
-                updateTotalCartPrice={updateTotalCartPrice}
                 removeProductInCart={removeProduct}
                 updateProduct={updateProduct}
               />
@@ -80,13 +79,19 @@ export const CartPage = ({ cart }: CartProps) => {
             ? `Subtotal: ${updatedCartPrice} Eur`
             : "Your cart is empty"}
         </Card>
-        <Button className="mx-auto bg-transparent text-black border-black">
-          <Link to={routes.shop} className="cart-button-link">
+        <Button className="mx-auto bg-transparent text-black border-black p-0">
+          <Link to={routes.shop} className="button-link">
             Continue shopping
           </Link>
         </Button>
-        <Button className="mx-auto bg-black text-white border-black">
-          <Link to={routes.notFound} onClick={emptyCart} className="cart-button-link">Checkout</Link>
+        <Button className="mx-auto bg-black text-white border-black p-0">
+          <Link
+            to={routes.notFound}
+            onClick={emptyCart}
+            className="button-link"
+          >
+            Checkout
+          </Link>
         </Button>
       </Container>
     </>
