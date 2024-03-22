@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Container, Navbar, Nav, Offcanvas, Badge } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import CartIcon from "../../../assets/icons/basket3.svg";
 import SearchIcon from "../../../assets/icons/search.svg";
@@ -35,9 +36,9 @@ export const NavbarBox = ({ updateCartBadge }: Props) => {
       <Container style={{ maxHeight: "100px", gap: "10px" }}>
         <Navbar.Brand href="#home">LOGO</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href={routes.shop}>Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Link to={routes.shop} className="button-link">Home</Link>
+          <Link to="#features" className="button-link">Features</Link>
+          <Link to="#pricing" className="button-link">Pricing</Link>
         </Nav>
         <img className="search-icon" src={SearchIcon} alt="search-logo" />
         <img

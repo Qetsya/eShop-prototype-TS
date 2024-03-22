@@ -47,16 +47,12 @@ export const CartList = ({ closeOffcanvas }: OffcanvasProps) => {
           : "Your cart is empty"}
       </Card>
       <Button
-        className="mx-auto bg-transparent text-black border-black"
+        className="mx-auto bg-transparent text-black border-black p-0"
         onClick={closeOffcanvas}
       >
-        {cartNotEmpty ? (
-          <Link to={routes.cart} className="cart-button-link">
-            View cart
-          </Link>
-        ) : (
-          "View cart"
-        )}
+        <Link to={cartNotEmpty ? routes.cart : "#"} className="button-link">
+          View cart
+        </Link>
       </Button>
     </Container>
   );

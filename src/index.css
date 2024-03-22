@@ -27,9 +27,11 @@ code {
   position: relative;
 }
 
-.cart-button-link {
+.button-link {
   text-decoration: none;
   color: inherit;
+  display: block;
+  padding: 6px 12px;
 }
 
 #dropdown-basic {

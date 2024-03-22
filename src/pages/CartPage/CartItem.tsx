@@ -2,25 +2,20 @@ import { useState } from "react";
 import { ListGroup, Card, Form } from "react-bootstrap";
 
 import { CartProduct } from "../../common/models/CartProduct";
-import { Product } from "../../common/models/Product";
-import { useList } from "../../common/hooks/useList";
 
 import TrashImage from "../../assets/icons/trash.svg";
 
 interface ProductProps {
   cartProduct: CartProduct;
-  updateTotalCartPrice(): void;
   removeProductInCart(product: CartProduct): void;
   updateProduct(product: CartProduct): void;
 }
 
 export const CartItem = ({
   cartProduct,
-  updateTotalCartPrice,
   removeProductInCart,
   updateProduct,
 }: ProductProps) => {
-  const { productList } = useList();
   const { id, title, stock, price, quantity, totalPrice } = cartProduct;
   const [insertedProductQuantity, setInsertedProductQuantity] =
     useState(quantity);
@@ -28,10 +23,6 @@ export const CartItem = ({
   let image = "https://cdn.dummyjson.com/product-images/-1/thumbnail.jpg";
   if (cartProduct.images) {
     image = cartProduct.images[0];
-  }
-  let productParent: Product;
-  for (let product of productList) {
-    if (product.id === cartProduct.id) productParent = product;
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,14 +33,9 @@ export const CartItem = ({
 
     e.target.value = String(newQuantity);
 
-    let renewProductObject = Object.assign(
-      new CartProduct(0, productParent),
-      cartProduct
-    );
-    renewProductObject.updateQuantityAndPrice(newQuantity);
-    updateProduct(renewProductObject);
+    cartProduct.quantity = newQuantity;
+    updateProduct(cartProduct);
     setInsertedProductQuantity(newQuantity);
-    updateTotalCartPrice();
   };
 
   const removeProduct = () => {
