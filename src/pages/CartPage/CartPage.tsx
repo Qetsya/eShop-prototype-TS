@@ -45,6 +45,7 @@ export const CartPage = ({ cart, updateCartBadge }: CartProps) => {
 
   const emptyCart = () => {
     emptyCartInLocalStorage("cart");
+    cart.emptyCart();
     updateCartBadge(cart);
   };
 

@@ -51,4 +51,9 @@ export class Cart {
     this.totalCartPrice = Number(newTotalCartPrice.toFixed(2));
     this.totalCartQuantity = newCartQuantity;
   }
+
+  emptyCart() {
+    this.cartProducts = [];
+    this.updateQuantityAndPrice();
+  }
 }
