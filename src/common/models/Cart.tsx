@@ -48,7 +48,7 @@ export class Cart {
       newTotalCartPrice += product.totalPrice;
     }
 
-    this.totalCartPrice = newTotalCartPrice;
+    this.totalCartPrice = Number(newTotalCartPrice.toFixed(2));
     this.totalCartQuantity = newCartQuantity;
   }
 }
